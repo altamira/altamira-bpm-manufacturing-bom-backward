@@ -5,7 +5,7 @@ To run this code, you need to do:
 
 1. Install [neo4j](http://neo4j.com/artifact.php?name=neo4j-community_windows_2_1_3.exe) database.
 
-2. Copy the all jar files in /db/plugin directory to /NEO4J_HOME/plugins and restart the server.
+2. Copy all jar files in /db/plugin directory to /NEO4J_HOME/plugins and restart the server.
 
 3. Load data can be doing:
 
@@ -33,4 +33,4 @@ Graph Data Model
 
 To work with graph vertex and edges see a view of the data:
 
-![Alt text](/master/docs/Processo%20de%20Fabricação.png?raw=true "Fabrica")
+![Alt text](docs/Processo%20de%20Fabricação.png?raw=true "Fabrica")
