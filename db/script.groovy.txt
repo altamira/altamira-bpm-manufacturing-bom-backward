@@ -1,0 +1,65 @@
+﻿/* ================ > Arestas < ============================== */
+
+g.addEdge(ee, pc, 'consome', ['consumo': '25.7 quilowatt/hora'])
+g.addEdge(pc, mq, 'produz', ['consumo': '40 cavalo vapor/segundo'])
+
+g.addEdge(mq, pp, 'utiliza', ['tempo': '2 horas'])
+g.addEdge(pr, pp, 'utiliza', ['tempo': '20 minutos'])
+g.addEdge(mt, pp, 'consome', ['comprimento': '20 metros'])
+g.addEdge(pp, st, 'produz', ['comprimento': '20 metros'])
+
+g.addEdge(mq, pf, 'utiliza', ['tempo': '30 segundos'])
+g.addEdge(op, pf, 'utiliza', ['tempo': '30 segundos'])
+g.addEdge(mt, pf, 'consome', ['comprimento': '1850 milimetros'])
+g.addEdge(pf, lg, 'produz', ['quantidade': '1 unidade'])
+
+
+
+/* Consultas basicas */
+
+lg.in.nome
+lg.in.filter{it.tipo == 'processo'}
+lg.in.in.nome
+
+'\nProcura Materia Prima .....\n'
+
+lg.in.inE('consome').outV.map()
+
+st.in.inE('consome').outV.loop(3){true}.path
+
+
+st.as('s').in.loop('s'){it.object.inE.label == 'consome'}.in
+
+
+st.as('s').in.loop('s'){it.object.outE.label == 'consome'}.in
+
+st.as('s').in.in.loop('s'){it.object.outE.label == 'consome'}
+
+/* Pega o valor da medida de uma propriedade de um vertice */
+p = 'comprimento'
+v = 0
+//v = l.getProperty(p).split(' ')[0].toInteger()
+
+v =0
+g.V.has(p).filter{it.getProperty(p)[0]!='?'}.transform{v+=it.getProperty(p).split(' ')[0].toInteger()}
+
+/* Page o valor da propriedade de uma aresta */
+p = 'tempo'
+v = 0
+//v = l.getProperty(p).split(' ')[0].toInteger()
+
+v =0
+
+/* percore uma arvore de produto longarina */
+lg.in.in.loop(2){true}{it!=null}
+
+/* percore uma arvore de produto sucata */
+st.in.in.loop(2){true}{it!=null}
+
+/* percorre a arvore de produto sucata e retorna somente os recursos que são consumidos no processo de fabricaoca */
+
+st.in.loop(1){true}{it!=null}.inE('consome').outV.nome
+
+/* retorna a materia prima consumida durante o processo de preparacao da maquina (sucata) */
+
+st.in.loop(1){true}{it!=null}.inE('consome').outV.has('tipo','materia_prima').map()

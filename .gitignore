@@ -1,0 +1,13 @@
+node_modules
+dist
+.tmp
+.sass-cache
+bower_components
+.classpath
+.settings
+src
+target
+.project
+altamira-bpm-manufacturing-bom
+angular-fullstack
+angular-app
