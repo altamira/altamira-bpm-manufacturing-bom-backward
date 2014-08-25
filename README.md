@@ -16,7 +16,7 @@ To run this code, you need to do:
     $ gremlin.bat
     $ gremlin> \l fabrica-db.groovy
 
-    b) Using POSTMAN Rest Client Chrome Plugin (db/fabrica-db.postman) or other rest client, import the request collection from db/fabrica-db.postman and run the script "Load Example Database" to load the data (needs [Neo4J Gremlin Extension Plugin](http://neo4j-contrib.github.io/gremlin-plugin) done in step 2)
+    b) Using POSTMAN Rest Client Chrome Plugin or other rest client, import the request collection from db/fabrica-db.postman and run the script "Load Example Database" to load the data. This option needs [Neo4J Gremlin Extension Plugin](http://neo4j-contrib.github.io/gremlin-plugin) done in step 2.
 ```
 
 4. Run the app:
