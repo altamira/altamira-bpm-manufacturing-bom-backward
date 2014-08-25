@@ -63,3 +63,8 @@ st.in.loop(1){true}{it!=null}.inE('consome').outV.nome
 /* retorna a materia prima consumida durante o processo de preparacao da maquina (sucata) */
 
 st.in.loop(1){true}{it!=null}.inE('consome').outV.has('tipo','materia_prima').map()
+
+/* retorna a materia prima consumida durante o processo de fabricacao de uma longarina */
+
+lg.in.loop(1){true}{it!=null}.inE('consome').outV.has('tipo', 'materia_prima').path.transform{[it.findAll{it instanceof Edge}.sum{it.comprimento.split(' ')[0].toInteger()}, it]}
+

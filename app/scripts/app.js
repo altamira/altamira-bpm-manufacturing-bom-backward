@@ -30,7 +30,20 @@ angular
       })
       .when('/material', {
         templateUrl: 'views/material.html',
-        controller: 'MaterialCtrl'
+        controller: 'MaterialCtrl',
+        resolve: {
+          node: function() {
+            return { 'data': { 'tipo' : 'materia_prima', 'nome': 'Materia prima...', 'peso': '? quilograma', 'espessura': '1.85 milimetros'}};
+          }
+        }
+      })
+      .when('/material/:id', {
+        templateUrl: 'views/material.html',
+        controller: 'MaterialCtrl',
+        resolve: {
+          node: ['Restangular', '$route', function (Restangular, $route) {
+            return Restangular.one('node', $route.current.params.id).get();
+          }]}
       })
       .when('/product', {
         templateUrl: 'views/product.html',

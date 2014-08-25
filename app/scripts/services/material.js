@@ -11,8 +11,9 @@ angular.module('appApp')
   .service('Material', function Material() {
     // AngularJS will instantiate a singleton by calling "new" on this function
   })
-  .factory('Material', function ($http,  Gremlin) {
+  .factory('Material', function ($http,  Gremlin, Restangular) {
   	var gremlin = Gremlin;
+  	var node = Restangular.all('node');
 
 	var getProperty = function(key, value) {
 		return "\"" + key + "\":\"" + value + "\"";
@@ -20,14 +21,14 @@ angular.module('appApp')
 
 	// Public API...
 	return {
-	  create : function(node) {
-	    return gremlin.run(node);
+	  create : function(material) {
+	    return node.customPOST(material.data);
 	  },
-	  save: function (node) {
-	    return gremlin.run(node);
+	  save: function (material) {
+	    return node.customPOST(material.data, material.self.substring(material.self.lastIndexOf('/') + 1));
 	  },
-	  remove: function (node) {
-	    return $http({method: 'DELETE', url: node.self})
+	  remove: function (id) {
+	    return node.delete(id);
 	  },
 	  list: function () {
 	    return Gremlin.run({"script": "g.V.has('tipo', 'materia_prima')"});

@@ -73,9 +73,9 @@ module.exports = function (grunt) {
       // Proxy requests starting with /webresources to the server on port 8080
       proxies: [
         {
-          context: '/altamira-bpm-manufacturing-bom',
+          context: '/db/data',
           host: 'localhost',
-          port: 8080,
+          port: 7474,
           https: false,
           changeOrigin: false
         }

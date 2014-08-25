@@ -5,9 +5,9 @@
   <form class="my-form">
     <label>Adicione novos recursos:</label>
     <p class="input-group">
-      <input type="text" class="form-control" placeholder="Adicione uma nova materia prima aqui" ng-model="new">
+      <input type="text" class="form-control" placeholder="Adicione uma nova materia prima aqui" ng-model="node.data.nome">
       <span class="input-group-btn">
-        <button type="submit" class="btn btn-primary" ng-click="add()">+ Adicionar</button>
+        <button type="submit" class="btn btn-primary" ng-click="save(node)">+ Adicionar</button>
       </span>
     </p>
   </form>
@@ -16,7 +16,7 @@
     <div class="col-lg-12">
       
       <ul class="nav nav-tabs nav-stacked col-md-6 col-lg-6 col-sm-12" ng-repeat="node in nodes">
-        <li><a href="#/node/{{node.id}}" tooltip="{{node.id}}">{{node.data.nome}}<button type="button" class="close" ng-click="remove(node)">&times;</button></a></li>
+        <li><a href="#/material/{{node.self.substring(node.self.lastIndexOf('/') + 1)}}" tooltip="{{node.id}}">{{node.data.nome}}<button type="button" class="close" ng-click="remove(node)">&times;</button></a></li>
       </ul>
     </div>
   </div>

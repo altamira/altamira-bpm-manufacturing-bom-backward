@@ -1,22 +1,58 @@
-g = new TinkerGraph();
-lg = g.addVertex(0, ['tipo':'produto', 'nome':'Longarina Tubo 113', 'comprimento': '1850 milimetro', 'peso': '16.67 quilograma', 'largura': '240 milimetro']);
-st = g.addVertex(1, ['tipo':'produto', 'nome':'Sucata Longarina Tubo 113', 'comprimento': '? milimetro', 'peso': '? quilograma', 'largura': '240 milimetro']);
-mt = g.addVertex(2, ['tipo':'materia_prima', 'nome':'Aco Carbono Fina Quente Rolo Oleado', 'comprimento': '? metro', 'peso': '? quilograma', 'largura': '240 milimetro', 'espessura': '1.85 milimetro', 'peso especifico': '18 quiligramas/metro']);
-mq = g.addVertex(3, ['tipo':'maquina', 'nome':'Perfiladeira de Tubo', 'velocidade': '7 metros/minuto', 'consumo': '25.0 quilowatt/hora', 'largura': '240 milimetro', 'espessura': '1.85 milimetro']);
-op = g.addVertex(4, ['tipo':'pessoa', 'nome':'Operador Perfiladeira', 'capacidade': '44 horas/semanais', 'valor': '23.4 reais/hora']);
-pr = g.addVertex(5, ['tipo':'pessoa', 'nome':'Preparador Maquina', 'capacidade': '44 horas/semanais', 'valor': '17.7 reais/hora']);
-ee = g.addVertex(6, ['tipo':'energia', 'nome':'Energia eletrica', 'capacidade':'750 KVA']);
+/* Command line to load graph: */
+
+/* Load via Rexster Remote Console: */
+/* rexster[groovy]> ?e C:\Users\Gerencia\git\altamira-bpm-manufacturing-bom\db\fabrica-db.groovy.txt */
+
+/* Load via Gremlin Standalone Console: */
+/* gremlin> \l C:\Users\Gerencia\git\altamira-bpm-manufacturing-bom\db\fabrica-db.groovy.txt
+
+/* Load to TinkerGraph Standalone Console: */
+/* g = new TinkerGraph(); */
+
+/* Load via Rexster HTTP API: */
+/* g = new RexsterGraph("http://localhost:8182/graphs/altamira") */
+
+/* Load via Rexster HTTP Console: */
+/* g = rexster.getGraph("altamira") */
+
+/* Load to Neo4j */
+g = new Neo4jGraph("F:/Documentos/Neo4j/default.graphdb");
+
+/* 
+Definicoes de Medidas:
+
+comprimento = milimetros
+largura = milimetros
+peso = quilogramas
+peso especifico = quiligramas/metro
+consumo =  quilowatt/hora
+valor =  reais/hora
+capacidade = horas/semanais (horas trabalhadas)
+capacidade = KVA (capacidade eletrica instalada)
+velocidade =  metros/minuto
+consumo = cavalo vapor/segundo (motor ??)
+tempo = minutos
+quantidade = unidade
+*/
+
+lg = g.addVertex(0, ['tipo':'produto', 'nome':'Longarina Tubo 113', 'comprimento': '1850', 'peso': '16.67', 'largura': '240']);
+st = g.addVertex(1, ['tipo':'produto', 'nome':'Sucata Longarina Tubo 113', 'comprimento': '?', 'peso': '?', 'largura': '240']);
+mt = g.addVertex(2, ['tipo':'materia_prima', 'nome':'Aco Carbono Fina Quente Rolo Oleado', 'comprimento': '?', 'peso': '?', 'largura': '240', 'espessura': '1.85', 'peso especifico': '18']);
+mq = g.addVertex(3, ['tipo':'maquina', 'nome':'Perfiladeira de Tubo', 'velocidade': '7', 'consumo': '25.0', 'largura': '240', 'espessura': '1.85']);
+op = g.addVertex(4, ['tipo':'pessoa', 'nome':'Operador Perfiladeira', 'capacidade': '44', 'valor': '23.4']);
+pr = g.addVertex(5, ['tipo':'pessoa', 'nome':'Preparador Maquina', 'capacidade': '44', 'valor': '17.7']);
+ee = g.addVertex(6, ['tipo':'energia', 'nome':'Energia eletrica', 'capacidade':'750']);
 pp = g.addVertex(7, ['tipo':'processo', 'nome':'Preparacao']);
 pf = g.addVertex(8, ['tipo':'processo', 'nome':'Perfilamento']);
 pc = g.addVertex(9, ['tipo':'processo', 'nome':'Consumo Energia']);
-g.addEdge(10, ee, pc, 'consome', ['consumo': '25.7 quilowatt/hora']);
-g.addEdge(11, pc, mq, 'produz', ['consumo': '40 cavalo vapor/segundo']);
-g.addEdge(12, mq, pp, 'utiliza', ['tempo': '2 horas']);
-g.addEdge(13, pr, pp, 'utiliza', ['tempo': '20 minutos']);
-g.addEdge(14, mt, pp, 'consome', ['comprimento': '20 metros']);
-g.addEdge(15, pp, st, 'produz', ['comprimento': '20 metros']);
-g.addEdge(16, mq, pf, 'utiliza', ['tempo': '30 segundos']);
-g.addEdge(17, op, pf, 'utiliza', ['tempo': '30 segundos']);
-g.addEdge(18, mt, pf, 'consome', ['comprimento': '1850 milimetros']);
-g.addEdge(19, pf, lg, 'produz', ['quantidade': '1 unidade']);
+g.addEdge(10, ee, pc, 'consome', ['consumo': '25.7']);
+g.addEdge(11, pc, mq, 'produz', ['consumo': '40']);
+g.addEdge(12, mq, pp, 'utiliza', ['tempo': '120']);
+g.addEdge(13, pr, pp, 'utiliza', ['tempo': '20']);
+g.addEdge(14, mt, pp, 'consome', ['comprimento': '20000']);
+g.addEdge(15, pp, st, 'produz', ['comprimento': '20000']);
+g.addEdge(16, mq, pf, 'utiliza', ['tempo': '0.5']);
+g.addEdge(17, op, pf, 'utiliza', ['tempo': '0.5']);
+g.addEdge(18, mt, pf, 'consome', ['comprimento': '1850']);
+g.addEdge(19, pf, lg, 'produz', ['quantidade': '1']);
 g.addEdge(20, g.v(7), g.v(8), 'sequencia');
